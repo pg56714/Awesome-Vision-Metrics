@@ -137,8 +137,50 @@ def calculate_mask_eiou(mask1, mask2):
 
 
 def calculate_focal_mask_eiou(mask1, mask2, gamma=2.0):
-    eiou = calculate_mask_eiou(mask1, mask2)
-    focal_eiou = (1 - eiou) ** gamma * eiou
+    # Calculate intersection and union
+    intersection = np.logical_and(mask1, mask2).sum()
+    union = np.logical_or(mask1, mask2).sum()
+
+    if union == 0:
+        return 0.0
+
+    # Determine the non-zero elements
+    mask1_nonzero = np.argwhere(mask1 == 1)
+    mask2_nonzero = np.argwhere(mask2 == 1)
+
+    # Handle cases where the mask is entirely zeros
+    if mask1_nonzero.size == 0 or mask2_nonzero.size == 0:
+        return 0.0
+
+    # Calculate the center only if there are non-zero elements
+    mask1_center = np.mean(mask1_nonzero, axis=0)
+    mask2_center = np.mean(mask2_nonzero, axis=0)
+
+    distance = np.linalg.norm(mask1_center - mask2_center)
+
+    # Determine the enclosing box coordinates
+    enclose_x_min = min(mask1_nonzero[:, 0].min(), mask2_nonzero[:, 0].min())
+    enclose_x_max = max(mask1_nonzero[:, 0].max(), mask2_nonzero[:, 0].max())
+    enclose_y_min = min(mask1_nonzero[:, 1].min(), mask2_nonzero[:, 1].min())
+    enclose_y_max = max(mask1_nonzero[:, 1].max(), mask2_nonzero[:, 1].max())
+    c_diag = np.linalg.norm(
+        np.array([enclose_x_max, enclose_y_max])
+        - np.array([enclose_x_min, enclose_y_min])
+    )
+
+    # Ensure c_diag is non-zero to avoid division errors
+    if c_diag == 0:
+        eiou = 0.0  # Change to 0.0 for consistency
+    else:
+        eiou = (intersection / union) - (distance**2 / c_diag**2)
+
+    # Calculate Focal EIoU
+    # Modify Focal EIoU formula to handle negative values
+    if eiou < 0:
+        focal_eiou = eiou * (1 + gamma)
+    else:
+        focal_eiou = eiou * (1 - (1 - eiou) ** gamma)
+
     return focal_eiou
 
 
