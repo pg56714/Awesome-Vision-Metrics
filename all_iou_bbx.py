@@ -122,7 +122,13 @@ def calculate_eiou(box1, box2):
 
 
 def calculate_focal_eiou(box1, box2, gamma=2.0):
+    iou = calculate_iou(box1, box2)
     eiou = calculate_eiou(box1, box2)
+
+    # Ensure Focal EIoU is 1 when completely overlapped
+    if eiou == 1:
+        return 1.0
+
     focal_eiou = (1 - eiou) ** gamma * eiou
     return focal_eiou
 
@@ -152,7 +158,7 @@ def calculate_alpha_iou(box1, box2, alpha=0.5):
     return alpha_iou
 
 
-def calculate_wiou(box1, box2, weight=0.5):
+def calculate_wiou(box1, box2, weight=1):
     iou = calculate_iou(box1, box2)
     wiou = iou * weight
     return wiou
@@ -193,7 +199,7 @@ test_cases = [
         [0, 0, 2, 2],
         [0.5, 0.5, 2.5, 2.5],
     ),
-    ("大面積交疊 (Large Area Overlap)", [0, 0, 4, 4], [2, 2, 6, 6]),
+    ("大面積交疊 (Large Area Overlap)", [0, 0, 4, 4], [1, 1, 3, 3]),
     ("一個框全為零 (One Box All Zero)", [0, 0, 0, 0], [1, 1, 2, 2]),
 ]
 
