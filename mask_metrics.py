@@ -44,28 +44,6 @@ def hausdorff_distance(true_mask, pred_mask):
     return max(forward_hausdorff, backward_hausdorff)
 
 
-def mean_absolute_error(true_mask, pred_mask):
-    """
-    Compute the Mean Absolute Error (MAE) between the true mask and the predicted mask.
-    """
-    assert (
-        true_mask.shape == pred_mask.shape
-    ), "Shape mismatch between true mask and predicted mask."
-    mae = np.mean(np.abs(true_mask - pred_mask))
-    return mae
-
-
-def mean_squared_error(true_mask, pred_mask):
-    """
-    Compute the Mean Squared Error (MSE) between the true mask and the predicted mask.
-    """
-    assert (
-        true_mask.shape == pred_mask.shape
-    ), "Shape mismatch between true mask and predicted mask."
-    mse = np.mean((true_mask - pred_mask) ** 2)
-    return mse
-
-
 # Test cases
 test_cases = [
     (
@@ -126,6 +104,4 @@ for description, true_mask, pred_mask in test_cases:
     print("  Pixel Accuracy:", pixel_accuracy(true_mask, pred_mask))
     print("  Dice Coefficient:", dice_coefficient(true_mask, pred_mask))
     print("  Hausdorff Distance:", hausdorff_distance(true_mask, pred_mask))
-    print("  Mean Absolute Error (MAE):", mean_absolute_error(true_mask, pred_mask))
-    print("  Mean Squared Error (MSE):", mean_squared_error(true_mask, pred_mask))
     print()

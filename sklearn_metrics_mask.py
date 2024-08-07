@@ -1,4 +1,11 @@
-from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+from sklearn.metrics import (
+    accuracy_score,
+    f1_score,
+    precision_score,
+    recall_score,
+    mean_absolute_error,
+    mean_squared_error,
+)
 import numpy as np
 
 test_cases = [
@@ -62,10 +69,14 @@ for description, true_mask, pred_mask in test_cases:
     precision = precision_score(true_flat, pred_flat, zero_division=0, average="binary")
     recall = recall_score(true_flat, pred_flat, zero_division=0, average="binary")
     f1 = f1_score(true_flat, pred_flat, zero_division=0, average="binary")
+    mae = mean_absolute_error(true_flat, pred_flat)
+    mse = mean_squared_error(true_flat, pred_flat)
 
     print(f"{description}:")
     print(f"  Accuracy: {accuracy:.2f}")
     print(f"  Precision: {precision:.2f}")
     print(f"  Recall: {recall:.2f}")
     print(f"  F1-Score: {f1:.2f}")
+    print(f"  Mean Absolute Error (MAE): {f1:.2f}")
+    print(f"  Mean Squared Error (MSE): {f1:.2f}")
     print()
