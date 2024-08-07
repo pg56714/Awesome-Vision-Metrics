@@ -12,13 +12,13 @@ python all_iou_bbx.py
 python all_iou_mask.py
 ```
 
-## accuracy, precision, recall, f1 score
+## accuracy, precision, recall, f1 score, MAE, MSE
 
 ```python
 python sklearn_metrics_mask.py
 ```
 
-## Pixel Accuracy, Dice Coefficient, Hausdorff Distance, MAE, MSE
+## Pixel Accuracy, Dice Coefficient, Hausdorff Distance
 
 ```python
 python mask_metrics.py
