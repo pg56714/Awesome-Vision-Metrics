@@ -1,4 +1,4 @@
-# Vision-Loss-Metrics
+# Awesome Metrics for Vision Model Evaluation
 
 This repository provides implementations and explanations of various loss functions for computer vision models.
 
@@ -12,7 +12,7 @@ python all_iou_bbx.py
 python all_iou_mask.py
 ```
 
-## accuracy, precision, recall, f1 score, MAE, MSE
+## accuracy, precision, recall, f1 score
 
 ```python
 python sklearn_metrics_mask.py

@@ -14,6 +14,7 @@ def pixel_accuracy(true_mask, pred_mask):
     return correct_pixels / total_pixels
 
 
+# equal to f1 score
 def dice_coefficient(true_mask, pred_mask):
     """
     Compute the Dice Coefficient between the true mask and the predicted mask.
@@ -21,9 +22,11 @@ def dice_coefficient(true_mask, pred_mask):
     assert (
         true_mask.shape == pred_mask.shape
     ), "Shape mismatch between true mask and predicted mask."
-    intersection = np.sum((true_mask == 1) & (pred_mask == 1))
-    union = np.sum(true_mask == 1) + np.sum(pred_mask == 1)
-    dice = (2.0 * intersection) / union if union != 0 else 1.0
+    true_mask_bin = (true_mask > 0).astype(np.uint8)
+    pred_mask_bin = (pred_mask > 0).astype(np.uint8)
+    intersection = np.sum(true_mask_bin & pred_mask_bin)
+    union = np.sum(true_mask_bin) + np.sum(pred_mask_bin)
+    dice = (2.0 * intersection) / union if union != 0 else 0.0
     return dice
 
 
@@ -101,7 +104,9 @@ test_cases = [
 # Run test cases
 for description, true_mask, pred_mask in test_cases:
     print(f"Test Case: {description}")
+    print(
+        "  Dice Coefficient:", dice_coefficient(true_mask, pred_mask)
+    )  # equal to f1 score
     print("  Pixel Accuracy:", pixel_accuracy(true_mask, pred_mask))
-    print("  Dice Coefficient:", dice_coefficient(true_mask, pred_mask))
     print("  Hausdorff Distance:", hausdorff_distance(true_mask, pred_mask))
     print()
