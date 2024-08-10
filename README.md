@@ -25,4 +25,4 @@ python mask_metrics.py
 ```
 
 ## Contributions
-Contributions and feedback are both welcomed and encouraged! Open an [issue](https://github.com/pg56714/Awesome-Vision-Metrics/issues) to report a bug, ask a question, or make a feature request.
+Contributions and feedback are both welcome and encouraged! Feel free to open an [issue](https://github.com/pg56714/Awesome-Vision-Metrics/issues) to report a bug, ask a question, or make a feature request.
