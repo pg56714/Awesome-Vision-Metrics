@@ -23,3 +23,6 @@ python sklearn_metrics_mask.py
 ```python
 python mask_metrics.py
 ```
+
+## Contributions
+Contributions and feedback are both welcomed and encouraged! Open an [issue](https://github.com/pg56714/Awesome-Vision-Metrics/issues) to report a bug, ask a question, or make a feature request.
